@@ -23,13 +23,7 @@ namespace WebApiShop.Controllers
             this.logger = logger;
         }
 
-        // GET: api/<UsersController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-
-        }
+        
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
