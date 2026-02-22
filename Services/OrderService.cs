@@ -7,20 +7,19 @@ namespace Services;
 
 public class OrderService : IOrderService
 {
-
-    IOrderRepository repository;
-    IMapper mapper;
+    private readonly IOrderRepository _repository;
+    private readonly IMapper _mapper;
 
     public OrderService(IOrderRepository repository, IMapper mapper)
     {
-        this.repository = repository;
-        this.mapper = mapper;
+        _repository = repository;
+        _mapper = mapper;
     }
 
     public async Task<OrderDTO> GetOrderById(int id)
     {
-        Order order = await repository.GetOrderById(id);
-        OrderDTO orderDTO = mapper.Map<Order,OrderDTO>(order);
+        Order order = await _repository.GetOrderById(id);
+        OrderDTO orderDTO = _mapper.Map<Order, OrderDTO>(order);
         return orderDTO;
     }
 
