@@ -1,6 +1,5 @@
 ﻿using DTOs;
 using Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
@@ -8,19 +7,19 @@ namespace WebAopiShop.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : Controller
+    public class ProductController : ControllerBase
     {
-        IProductService service;
+        private readonly IProductService _service;
 
         public ProductController(IProductService service)
         {
-            this.service = service;
+            _service = service;
         }
 
         [HttpGet]
-        public async Task<ActionResult<ProductDTO>> Get(int[]? categoryId, int? minPrice, int? maxPrice, int? limit, int? page)
+        public async Task<ActionResult<List<ProductDTO>>> Get(int[]? categoryId, int? minPrice, int? maxPrice, int? limit, int? page)
         {
-            List<ProductDTO> products = await service.GetProducts(categoryId,minPrice, maxPrice,limit,page);
+            List<ProductDTO> products = await _service.GetProducts(categoryId, minPrice, maxPrice, limit, page);
             if (products == null)
             {
                 return NoContent();
@@ -28,4 +27,5 @@ namespace WebAopiShop.Controllers
             return Ok(products);
         }
     }
+}
 }

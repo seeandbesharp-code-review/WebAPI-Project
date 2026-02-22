@@ -1,5 +1,4 @@
 ﻿using Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
@@ -7,19 +6,19 @@ namespace WebAopiShop.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : Controller
+    public class CategoryController : ControllerBase
     {
-        ICategoryService service;
+        private readonly ICategoryService _service;
 
         public CategoryController(ICategoryService service)
         {
-            this.service = service;
+            _service = service;
         }
 
         [HttpGet]
-        public async Task<ActionResult<Category>> Get()
+        public async Task<ActionResult<List<Category>>> Get()
         {
-            List<Category> categories = await service.GetCategories();
+            List<Category> categories = await _service.GetCategories();
             if (categories == null)
             {
                 return NoContent();

@@ -2,31 +2,29 @@
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Services;
-using System.Text.Json;
-using WebAopiShop;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebApiShop.Controllers
 {
-    
     [Route("api/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
     {
-        IOrderService service;
+        private readonly IOrderService _service;
 
         public OrderController(IOrderService service)
         {
-            this.service = service;
+            _service = service;
         }
 
-        // GET: api/<UsersController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("{id}")]
+        public async Task<ActionResult<OrderDTO>> Get(int id)
         {
-            return new string[] { "value1", "value2" };
-
+            OrderDTO order = await _service.GetOrderById(id);
+            if (order == null)
+            {
+                return NoContent();
+            }
+            return Ok(order);
         }
 
         // GET api/<UsersController>/5

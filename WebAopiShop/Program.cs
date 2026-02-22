@@ -1,13 +1,12 @@
-
-
 using Microsoft.EntityFrameworkCore;
 using NLog.Web;
 using Repositories;
 using Repositories.Models;
 using Services;
 
-
 var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -18,7 +17,6 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-// Add services to the container.
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
